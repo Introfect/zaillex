@@ -53,24 +53,24 @@ if(email){
 }
 }
   return (
-    <div className=' bg-gray-200  h-screen  w-full flex items-center'>
+    <div className=' bg-gray-200  h-screen  w-full flex  items-stretch lg:items-center'>
       <div className='h-full w-full flex items-center lg:h-2/4'>
 
-      <div className=' w-full flex flex-col justify-center items-center h-full lg:max-w-lg space-y-10 ml-10'>
-        <p className='text-6xl font-bold max-w-md'>
+      <div className=' w-full flex flex-col justify-center items-center lg:items-start h-full lg:max-w-lg space-y-10 ml-10'>
+        <p className='text-6xl font-bold lg:max-w-md text-center lg:text-left'>
           Run your entire buisness in one place
         </p>
-        <p className='max-w-sm text-lg font-thin'>The only business management tool that combines CRM, invoicing, accounting and banking.
+        <p className='max-w-lg text-center lg:max-w-sm text-lg font-thin lg:text-left'>The only business management tool that combines CRM, invoicing, accounting and banking.
 
 </p>
-<button className='max-w-max'>Get Started</button>
+<button type="button" className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 outline-none ">Get started</button>
 
       </div>
       </div>
       <div className='hidden lg:block'>
         <img
         src='https://assets-global.website-files.com/635ac9564cc3682ce1536786/6398ab6fe9bf5347ad04f377_branch_main.png'
-        className='max-w-xl'
+        className=' max-w-md lg:max-w-xl'
         />
       </div>
       {/* <div className='flex space-x-20 item-center justify-center'>
