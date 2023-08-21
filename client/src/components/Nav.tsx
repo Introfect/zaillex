@@ -1,9 +1,11 @@
 import React from 'react'
 import { Codesandbox } from 'lucide-react';
 
-type Props = {}
+type Props = {
+  setShow:any
+}
 
-function Nav({}: Props) {
+function Nav({setShow}: Props) {
   const user=localStorage.getItem('user')
   return (
     
@@ -20,7 +22,7 @@ function Nav({}: Props) {
 
 <span className="self-center text-md font-medium whitespace-nowrap ">Welcome back {user}</span>
     ):(
-      <button type="button" className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 ">Get started</button>
+      <button type="button" className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 " onClick={()=>setShow(true)}>Get started</button>
     )
     }
       

@@ -2,37 +2,94 @@ import React from 'react'
 import { useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import { doLogin } from '../auth'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import { Formik, Field, Form, FormikHelpers } from 'formik';
-import { error } from 'console'
+import emailValidator from 'email-validator';
 
 interface Values {
   firstName: string;  
   lastName: string;
   email: string;
 }
+type Props={
+  setShow:any,
+  show:boolean
+}
 
-const Login = () => {
+const Login = ({setShow,show}: Props) => {
   const navigate = useNavigate()
   const [register, setRegister] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
-  const [formState, setFormState] = useState(0)
-  const [show,setShow]=useState(false)
+  const [isValid, setIsValid] = useState<boolean>(true);
 
+  const handleChange = (e:any) => {
+    const newEmail = e.target.value;
+    setIsValid(emailValidator.validate(newEmail));
+    isValid && setEmail(newEmail);
+  };
   const loginUser = async (e: any) => {
     e.preventDefault()
-    const response = await axios.post('http://localhost:5000/api/v1/auth/login', {
+    const response = await  axios.post('http://localhost:5000/api/v1/auth/login', {
       userEmail: email,
       password: password,
-    })
-    toast.success('Login Successful')
-    doLogin(response.data)
-    navigate('/')
-    console.log(response.data)
+    }).then((response) => {
+
+      doLogin(response.data)
+      navigate('/')
+      setShow(false)
+      return (toast.success ("Registration Succesfull", {
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+      )
+      )
+    }).catch(errr => {
+      if (errr instanceof AxiosError) {
+        if (errr.response?.status === 409) {
+          return (toast.error ("User already exist", {
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+          )
+          )
+        }else{
+          return (toast.error (`${errr.response?.status} error occured`, {
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+          )
+          )
+        }
+      }else{
+        return (toast.error ("Some error occured", {
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+        )
+        )
+      }
+    }
+    )
+   
   }
   const registerUser = async (e: any) => {
     e.preventDefault()
@@ -58,8 +115,8 @@ const Login = () => {
       )
     }).catch(errr => {
       if (errr instanceof AxiosError) {
-        if (errr.response?.status === 409) {
-          return (toast.error ("User already exist", {
+        if (errr.response?.status === 404) {
+          return (toast.error ("Invalid id pass", {
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -122,9 +179,16 @@ const Login = () => {
                   className='h-10 mx-5 p-1'
                   type='text' placeholder='Enter your Username' /> : null}
                 <input
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => handleChange(e)}
                   className='h-10 mx-5 p-1'
                   type='text' placeholder='Enter your email' />
+                  {
+                    isValid?(
+                      null
+                    ):(
+                      <span className='text-red-600 ml-6 text-xs font-bold'>Enter correct Email</span>
+                    )
+                  }
                 <input
                   onChange={(e) => setPassword(e.target.value)}
                   className='h-10 mx-5 p-1'
@@ -134,6 +198,7 @@ const Login = () => {
                   className='h-10 mx-5 p-1'
                   type='text' placeholder='Confirm your Password' /> : null}
                 <button
+                  disabled={isValid}
                   onClick={register ? registerUser : loginUser}
 
                   type='submit'>
@@ -156,7 +221,7 @@ const Login = () => {
     <div className="px-12 mx-auto max-w-7xl">
         <div className="w-full mx-auto text-left md:w-11/12 xl:w-9/12 md:text-center">
             <h1 className="mb-8 text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl md:tracking-tight">
-                <span>Start</span> <span className="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-600 to-purple-500 lg:inline">building a buzz</span> <span>around your product ?</span>
+                <span>Start</span> <span className="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-600 to-black lg:inline">building a buzz</span> <span>around your product ?</span>
             </h1>
             <p className="px-0 mb-8 text-lg text-gray-600 md:text-xl lg:px-24">
                 Start gaining the traction you've always wanted with our next-level templates and designs. Crafted to help you tell your story.
