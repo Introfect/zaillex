@@ -1,18 +1,29 @@
 import React from 'react'
+import { Codesandbox } from 'lucide-react';
 
 type Props = {}
 
 function Nav({}: Props) {
+  const user=localStorage.getItem('user')
   return (
     
-<nav className="fixed top-0 inset-x-0 h-fit bg-gray-200 border-b z-[10] py-1">
+<nav className="fixed top-0 inset-x-0 h-fit  border-b z-[10] py-1">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
-  <a href="https://flowbite.com/" className="flex items-center">
-      <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3 text-green-600" alt="Logo"/>
-      <span className="self-center text-2xl font-semibold whitespace-nowrap text-green-600">SAAS</span>
+  <a href="/" className="flex items-center">
+      <Codesandbox className='text-green-600 w-12'/>
+      <span className="self-center text-xl font-semibold whitespace-nowrap ">CodeSB</span>
   </a>
   <div className="flex md:order-2">
+    {
+
+    user?(
+
+<span className="self-center text-md font-medium whitespace-nowrap ">Welcome back {user}</span>
+    ):(
       <button type="button" className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 ">Get started</button>
+    )
+    }
+      
       <button data-collapse-toggle="navbar-sticky" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200  " aria-controls="navbar-sticky" aria-expanded="false">
         <span className="sr-only">Open main menu</span>
         <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">

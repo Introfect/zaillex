@@ -36,14 +36,14 @@ export const doLogin=(data)=>{
        }
        return false
    }
- export const privateAxios = axios.create({
-   baseURL: 'http://localhost:5000/api/v1',
-})
-privateAxios.interceptors.request.use((config) => {
-   const token = getToken()
-   if(token){
-   config.headers.authorization = `Bearer ${token}`
-   return config
-   }
-}, error=> Promise.reject(error))
+//  export const privateAxios = axios.create({
+//    baseURL: 'http://localhost:5000/api/v1',
+// })
+// privateAxios.interceptors.request.use((config) => {
+//    const token = getToken()
+//    if(token){
+//    config.headers.authorization = `Bearer ${token}`
+//    return config
+//    }
+// }, error=> Promise.reject(error))
 

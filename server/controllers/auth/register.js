@@ -6,7 +6,7 @@ const register = async (req, res) => {
   const userEmail = await User.findOne({ userEmail: req.body.userEmail });
   
   if (userEmail) {
-    res.status(401).json("User already exists!");
+    res.status(409).json("User already exists!");
     return;
   }
   const user = new User({
@@ -21,12 +21,12 @@ const register = async (req, res) => {
       if (req.body.password === req.body.confirmPassword) {
         user.save();
       } else {
-        res.status(401).json("Password does not match");
+        res.status(402).json("Password does not match");
         return;
       }
     }
   } catch (error) {
-    res.status(401).json("Password does not match with confirm Password");
+    res.status(401).json("some error occured");
     return;
   }
   res.status(200).json({
